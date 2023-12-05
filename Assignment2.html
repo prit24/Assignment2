@@ -1,0 +1,116 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+    }
+
+    input, button {
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    function calculateLoan() {
+      var employeeId = document.getElementById("employeeId").value;
+      var name = document.getElementById("name").value;
+	var address= document.getElementById("address").value;
+      var designation = document.getElementById("designation").value;
+      var loanAmount = parseFloat(document.getElementById("loanAmount").value);
+      var dateOfLoan = document.getElementById("dateOfLoan").value;
+      var interestRate = 0;
+
+      if (employeeId.length < 4 || !employeeId.startsWith("E")) {
+        alert("Invalid Employee ID format. It must be at least four characters and start with 'E'.");
+        return;
+      }
+
+      switch (designation) {
+        case "Manager":
+          interestRate = 0.1;
+          break;
+        case "Developer":
+          interestRate = 0.08;
+          break;
+        case "Tester":
+          interestRate = 0.06;
+          break;
+        default:
+          interestRate = 0.05;
+      }
+
+      var totalInterest = loanAmount * interestRate;
+      var totalAmountPayable = loanAmount + totalInterest;
+
+      document.getElementById("result").innerHTML = `
+        <h2>Loan Details</h2>
+        <p><strong>Employee ID:</strong> ${employeeId}</p>
+        <p><strong>Name:</strong> ${name}</p>
+	<p><strong>Address:</strong> ${address}</p>
+        <p><strong>Designation:</strong> ${designation}</p>
+        <p><strong>Loan Amount:</strong> $${loanAmount.toFixed(2)}</p>
+        <p><strong>Total Interest:</strong> $${totalInterest.toFixed(2)}</p>
+        <p><strong>Total Amount Payable:</strong> $${totalAmountPayable.toFixed(2)}</p>
+      `;
+    }
+  </script>
+</head>
+<body>
+  <h1>Loan Calculator</h1>
+  <form>
+    <label for="employeeId">Employee ID:</label>
+    <input type="text" id="employeeId" required>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+
+<label for="address">Address:</label>
+    <input type="text" id="address" required>
+
+    <label for="designation">Designation:</label>
+    <input type="text" id="designation" required>
+
+    <label for="loanAmount">Loan Amount:</label>
+    <input type="number" id="loanAmount" required>
+
+    <label for="dateOfLoan">Date of Loan Taken:</label>
+    <input type="date" id="dateOfLoan" required>
+
+    <button type="button" onclick="calculateLoan()">Calculate</button>
+  </form>
+
+  <div id="result"></div>
+</body>
+</html>
